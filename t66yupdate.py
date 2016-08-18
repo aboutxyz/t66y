@@ -28,6 +28,7 @@ headers = {
     # gz.close()
     # return data
 def getcontent(page):
+    templist = []
     response = requests.get("http://www.t66y.com/thread0806.php?fid=7&search=&page="+str(page),headers = headers)
     response.encoding = 'gb18030'
     #unzip(respone.read()).decode(encoding,'ignore')
@@ -36,20 +37,21 @@ def getcontent(page):
         for y in x.findAll('h3'):
             for z in y.findAll('a'):
                 try:
-                    list.append(str(y.get_text())+'  '+'http://www.t66y.com/'+z['href']+'\r\n')
+                    templist.append(str(z.get_text())+'  '+'http://www.t66y.com/'+z['href']+'\r\n')
                 except KeyError:
                     pass                    
         for o in x.findAll("td",attrs={"class":"tal y-style"}):
             for p in o.findAll("a",attrs={"class":"bl"}):
                 try:
-                    list.append(str(p.get_text())+'\r\n')
+                    templist.append(str(p.get_text())+'\r\n')
                 except KeyError:
                     pass
-            for p in o.findAll("div",attrs={"class":"f10"}):
+            for q in o.findAll("div",attrs={"class":"f10"}):
                 try:
-                    list.append(str(p.get_text())+'\r\n')
+                    templist.append(str(q.get_text())+'\r\n')
                 except KeyError:
                     pass
+        list.extend(templist)
 page = 1
 list = []
 def Mutipleth():

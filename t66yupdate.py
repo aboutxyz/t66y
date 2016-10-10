@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 import threading
+from fake_useragent import UserAgent
+ua = UserAgent()
 
 starttime = time.clock()
 
@@ -17,7 +19,9 @@ TIME2 = TIME2.strftime("%Y-%m-%d")
 # data = {'query':'query','begin_time':TIME1, 'end_time':TIME2}
 # response=requests.get("http://www.t66y.com/thread0806.php?fid=7",data, headers=headers)
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
+    'Host': 'www.t66y.com',
+    'User-Agent': ua.random,
+    'Accept-Encoding': '',
 }
 # def unzip(data):
     # import gzip
@@ -51,7 +55,7 @@ def getcontent(page):
                     templist.append(str(q.get_text())+'\r\n')
                 except KeyError:
                     pass
-        list.extend(templist)
+    list.extend(templist)
 page = 1
 list = []
 def Mutipleth():
